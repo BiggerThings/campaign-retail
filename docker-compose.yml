@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: user_admin
+      POSTGRES_PASSWORD: secret_password
+      POSTGRES_DB: my_app_db
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://user_admin:secret_password@db:5432/my_app_db
+    depends_on:
+      - db
