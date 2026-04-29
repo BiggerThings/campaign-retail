@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2022",                                  /* Modern JS support */
+    "lib": ["ES2022"],                                   /* Libraries available */
+
+    /* Modules */
+    "module": "NodeNext",                                /* Required for modern Node.js */
+    "moduleResolution": "NodeNext",
+    "rootDir": "./src",                                  /* Where your TS files live */
+    "outDir": "./dist",                                  /* Where compiled JS goes */
+    "baseUrl": ".",                                      
+
+    /* JavaScript Support */
+    "allowJs": true,                                     /* Useful if you mix JS/TS */
+    "checkJs": false,
+
+    /* Emit */
+    "removeComments": true,                              /* Smaller bundle size */
+    "noEmit": false,                                     /* Allow creating JS files */
+
+    /* Interop Constraints */
+    "esModuleInterop": true,                             /* Fixes common import issues */
+    "forceConsistentCasingInFileNames": true,            /* Important for Linux/Docker */
+
+    /* Type Checking */
+    "strict": true,                                      /* The "Gold Standard" for safety */
+    "noImplicitAny": true,                               /* No lazy 'any' types */
+    "skipLibCheck": true                                 /* Faster builds */
+  },
+  "include": ["src/**/*"],                               /* Only compile files in src */
+  "exclude": ["node_modules", "**/*.test.ts"]            /* Ignore dependencies and tests */
+}
