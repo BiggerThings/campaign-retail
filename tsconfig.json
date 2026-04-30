@@ -8,8 +8,7 @@
     "module": "NodeNext",                                /* Required for modern Node.js */
     "moduleResolution": "NodeNext",
     "rootDir": "./src",                                  /* Where your TS files live */
-    "outDir": "./dist",                                  /* Where compiled JS goes */
-    "baseUrl": ".",                                      
+    "outDir": "./dist",                                  /* Where compiled JS goes */                                     
 
     /* JavaScript Support */
     "allowJs": true,                                     /* Useful if you mix JS/TS */
