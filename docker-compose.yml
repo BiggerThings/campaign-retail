@@ -13,6 +13,8 @@ services:
     build: .
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     environment:
       DATABASE_URL: postgres://user_admin:secret_password@db:5432/my_app_db
     depends_on:
