@@ -7,7 +7,7 @@ import health_route from "./routes/healthRoute"
 const app = express();
 app.use(express.json());
 
-app.use("/health", health_route);
+app.use(health_route);
 
 const PORT = process.env.PORT;
 app.listen(Number(PORT), '0.0.0.0', () => {
