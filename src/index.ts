@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
-dotenv.config()
+dotenv.config();
+
+import './db';
 
 import express from 'express';
 import health_route from "./routes/healthRoute"
