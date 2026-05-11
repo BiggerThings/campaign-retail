@@ -16,3 +16,24 @@ pool.connect((err, client, release) => {
   console.log('✅ Connected to PostgreSQL successfully');
   release();
 });
+
+export const initDB = async () => {
+  const queryText = `
+    CREATE TABLE IF NOT EXISTS customers (
+      id SERIAL PRIMARY KEY,
+      first_name VARCHAR(50) NOT NULL,
+      last_name VARCHAR(50) NOT NULL,
+      gender VARCHAR(20),
+      dob DATE,
+      province VARCHAR(100),
+      campaigns_participated INTEGER[] DEFAULT '{}',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+  try {
+    await pool.query(queryText);
+    console.log("✅ Customers table initialized successfully");
+  } catch (err) {
+    console.error("❌ Error initializing tables", err);
+  }
+};
