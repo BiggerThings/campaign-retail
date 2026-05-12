@@ -19,6 +19,7 @@ pool.connect((err, client, release) => {
 
 export const initDB = async () => {
   const queryText = `
+    -- Customers Table  
     CREATE TABLE IF NOT EXISTS customers (
       id SERIAL PRIMARY KEY,
       first_name VARCHAR(50) NOT NULL,
@@ -28,6 +29,13 @@ export const initDB = async () => {
       province VARCHAR(100),
       campaigns_participated INTEGER[] DEFAULT '{}',
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+    -- Campaigns Table
+    CREATE TABLE IF NOT EXISTS campaigns (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      total_customers_participated INTEGER DEFAULT 0
     );
   `;
   try {
