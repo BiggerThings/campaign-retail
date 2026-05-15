@@ -37,6 +37,13 @@ export const initDB = async () => {
       name VARCHAR(255) NOT NULL,
       total_customers_participated INTEGER DEFAULT 0
     );
+
+    -- Stores Table
+    CREATE TABLE IF NOT EXISTS stores (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      location VARCHAR(255)
+    );
   `;
   try {
     await pool.query(queryText);
