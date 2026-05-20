@@ -44,6 +44,19 @@ export const initDB = async () => {
       name VARCHAR(255) NOT NULL,
       location VARCHAR(255)
     );
+
+    -- Transactions Table
+    CREATE TABLE IF NOT EXISTS transactions (
+      id SERIAL PRIMARY KEY,
+      source VARCHAR(100) NOT NULL,
+      customer_id INTEGER REFERENCES customers(id) ON DELETE SET NULL,
+      store_no INTEGER NOT NULL,
+      purchased_at TIMESTAMP NOT NULL,
+      net_amount NUMERIC(10, 2) NOT NULL DEFAULT 0.00,
+      lines INTEGER NOT NULL DEFAULT 1,
+      image_url VARCHAR(500), -- Stores the receipt image path/URL
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
   `;
   try {
     await pool.query(queryText);
