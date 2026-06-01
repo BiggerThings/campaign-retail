@@ -5,6 +5,7 @@ export const TransactionModel = {
     create: async (
         source: string,
         customerId: number | null,
+        campaignId: number | null, // Added parameter
         storeNo: number,
         purchasedAt: string,
         netAmount: number,
@@ -12,11 +13,11 @@ export const TransactionModel = {
         imageUrl: string | null
     ) => {
         const query = `
-      INSERT INTO transactions (source, customer_id, store_no, purchased_at, net_amount, lines, image_url) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7) 
+      INSERT INTO transactions (source, customer_id, campaign_id, store_no, purchased_at, net_amount, lines, image_url) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
       RETURNING *`;
 
-        const values = [source, customerId, storeNo, purchasedAt, netAmount, lines, imageUrl];
+        const values = [source, customerId, campaignId, storeNo, purchasedAt, netAmount, lines, imageUrl];
         const result = await pool.query(query, values);
         return result.rows[0];
     },

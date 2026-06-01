@@ -1,22 +1,31 @@
 import { Request, Response } from 'express';
 import { TransactionModel } from '../models/transactionModel';
+import { pool } from '../db';
 
 export const createTransaction = async (req: Request, res: Response) => {
-    const { source, customer_id, store_no, purchased_at, net_amount, lines, image_url } = req.body;
+    const { source, customer_id, campaign_id, store_no, purchased_at, net_amount, lines, image_url } = req.body;
 
     try {
-        // Basic validation for required fields
         if (!source || !store_no || !purchased_at || net_amount === undefined || !lines) {
-            return res.status(400).json({
-                error: "Missing required fields: source, store_no, purchased_at, net_amount, and lines are mandatory."
-            });
+            return res.status(400).json({ error: "Missing required fields." });
+        }
+
+        let finalCampaignId = campaign_id ? Number(campaign_id) : null;
+
+        // Optional Feature: If no campaign_id is provided, automatically fallback to 'smmr_26'
+        if (!finalCampaignId) {
+            const campResult = await pool.query("SELECT id FROM campaigns WHERE name = 'smmr_26'");
+            if (campResult.rows.length > 0) {
+                finalCampaignId = campResult.rows[0].id;
+            }
         }
 
         const newTransaction = await TransactionModel.create(
             source,
             customer_id ? Number(customer_id) : null,
+            finalCampaignId, // Pass it down to database
             Number(store_no),
-            purchased_at, // Expected format: "2026-05-20T14:30:00Z" or "2026-05-20"
+            purchased_at,
             Number(net_amount),
             Number(lines),
             image_url || null
@@ -27,7 +36,7 @@ export const createTransaction = async (req: Request, res: Response) => {
             data: newTransaction
         });
     } catch (error) {
-        console.error('❌ Error creating transaction:', error);
+        console.error('❌ Error logging transaction:', error);
         res.status(500).json({ error: "Failed to log transaction record." });
     }
 };
