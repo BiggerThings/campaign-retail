@@ -7,15 +7,14 @@ export const CustomerModel = {
         lastName: string,
         gender: string,
         dob: string,
-        province: string,
-        campaignIds: number[] // Expecting an array of numbers
+        province: string
     ) => {
         const query = `
-      INSERT INTO customers (first_name, last_name, gender, dob, province, campaigns_participated)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO customers (first_name, last_name, gender, dob, province)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING *`;
 
-        const values = [firstName, lastName, gender, dob, province, campaignIds];
+        const values = [firstName, lastName, gender, dob, province];
         const result = await pool.query(query, values);
         return result.rows[0];
     },
@@ -32,16 +31,16 @@ export const CustomerModel = {
     },
 
     // UPDATE: Add a campaign ID to the existing array (Non-destructive)
-    addCampaignToCustomer: async (customerId: number, campaignId: number) => {
-        const query = `
-      UPDATE customers 
-      SET campaigns_participated = array_append(campaigns_participated, $1)
-      WHERE id = $2
-      RETURNING *`;
+    // addCampaignToCustomer: async (customerId: number, campaignId: number) => {
+    //     const query = `
+    //   UPDATE customers 
+    //   SET campaigns_participated = array_append(campaigns_participated, $1)
+    //   WHERE id = $2
+    //   RETURNING *`;
 
-        const result = await pool.query(query, [campaignId, customerId]);
-        return result.rows[0];
-    },
+    //     const result = await pool.query(query, [campaignId, customerId]);
+    //     return result.rows[0];
+    // },
 
     // DELETE: Remove a customer
     remove: async (id: number) => {

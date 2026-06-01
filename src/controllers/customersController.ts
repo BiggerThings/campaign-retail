@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { CustomerModel } from '../models/customerModel';
 
 export const createCustomer = async (req: Request, res: Response) => {
-    const { first_name, last_name, gender, dob, province, campaigns_participated } = req.body;
+    const { first_name, last_name, gender, dob, province } = req.body;
 
     try {
         const newUser = await CustomerModel.create(
@@ -10,8 +10,7 @@ export const createCustomer = async (req: Request, res: Response) => {
             last_name,
             gender,
             dob,
-            province,
-            campaigns_participated || [] // Default to empty array if not provided
+            province
         );
         res.status(201).json(newUser);
     } catch (error) {
@@ -43,6 +42,7 @@ export const getAllCustomers = async (req: Request, res: Response) => {
     }
 };
 
+
 export const getCustomerById = async (req: Request, res: Response) => {
     const { id } = req.params;
 
@@ -71,14 +71,14 @@ export const getCustomerById = async (req: Request, res: Response) => {
 };
 
 // New Controller method to join a campaign
-export const joinCampaign = async (req: Request, res: Response) => {
-    const { id } = req.params; // Customer ID from URL
-    const { campaign_id } = req.body; // Campaign ID from body
+// export const joinCampaign = async (req: Request, res: Response) => {
+//     const { id } = req.params; // Customer ID from URL
+//     const { campaign_id } = req.body; // Campaign ID from body
 
-    try {
-        const updatedCustomer = await CustomerModel.addCampaignToCustomer(Number(id), campaign_id);
-        res.status(200).json(updatedCustomer);
-    } catch (error) {
-        res.status(500).json({ error: "Could not update campaign participation" });
-    }
-};
+//     try {
+//         const updatedCustomer = await CustomerModel.addCampaignToCustomer(Number(id), campaign_id);
+//         res.status(200).json(updatedCustomer);
+//     } catch (error) {
+//         res.status(500).json({ error: "Could not update campaign participation" });
+//     }
+// };
