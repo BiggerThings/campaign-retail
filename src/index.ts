@@ -11,6 +11,7 @@ import customerRoute from './routes/customerRoute';
 import campaignRouter from './routes/campaignRoute';
 import storeRoutes from './routes/storeRoutes';
 import transactionRoute from './routes/transactionRoutes';
+import tokenRouter from './routes/getTokenRoute';
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use(express.json());
 initDB(); // Initialize the database tables
 
 app.use(health_route);
+app.use('/api/token', tokenRouter);
 app.use('/api/customers', customerRoute);
 app.use('/api/campaigns', campaignRouter);
 app.use('/api/stores', storeRoutes);
