@@ -21,8 +21,13 @@ export const getTokenController = (req: Request, res: Response) => {
             return res.status(401).json({ error: "Invalid credentials." });
         }
 
-        const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
-        return res.json({
+        const jwtSecret = process.env.JWT_SECRET;
+        if (!jwtSecret) {
+            return res.status(500).json({ error: "JWT secret is not configured." });
+        }
+
+        const token = jwt.sign({ username: user.username }, jwtSecret, { expiresIn: '1h' });
+        return res.status(200).json({
             token,
             expiresIn: 3600 // 1 hour in seconds
         });
