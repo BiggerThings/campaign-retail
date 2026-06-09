@@ -1,7 +1,6 @@
 import { Response, Request } from 'express';
 import jwt from 'jsonwebtoken';
 
-
 const users = [
     {
         username: "admin",
